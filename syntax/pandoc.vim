@@ -312,10 +312,6 @@ call s:WithConceal("block", 'syn region pandocEmphasisInStrong matchgroup=pandoc
 call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs', 'concealends')
 call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
 call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-"" Using double back ticks
-call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/ end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/  end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/  end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
 "syn match pandocNoFormattedAttrs /{.\{-}}/ contained
 "}}}
 " Subscripts: {{{3 
