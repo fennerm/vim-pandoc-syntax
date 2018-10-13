@@ -309,14 +309,14 @@ call s:WithConceal("block", 'syn region pandocEmphasisInStrong matchgroup=pandoc
 " Inline Code: {{{3
 
 " Using single back ticks
-call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!`/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!`/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!`/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-" Using double back ticks
-call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!``/ end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!``/ end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!``/ end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
-syn match pandocNoFormattedAttrs /{.\{-}}/ contained
+call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs', 'concealends')
+call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
+call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!`\(`\|\n\)\@!/ end=/\\\@<!`/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
+"" Using double back ticks
+call s:WithConceal("inlinecode", 'syn region pandocNoFormatted matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/ end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs', 'concealends')
+call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInEmphasis matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/  end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
+call s:WithConceal("inlinecode", 'syn region pandocNoFormattedInStrong matchgroup=pandocOperator start=/\\\@<!``\(`|\n\)\@!/  end=/\\\@<!``/ nextgroup=pandocNoFormattedAttrs contained', 'concealends')
+"syn match pandocNoFormattedAttrs /{.\{-}}/ contained
 "}}}
 " Subscripts: {{{3 
 syn region pandocSubscript start=/\~\(\([[:graph:]]\(\\ \)\=\)\{-}\~\)\@=/ end=/\~/ keepend
@@ -377,8 +377,9 @@ syn match pandocTableHeaderWord /\<.\{-}\>/ contained containedin=pandocGridTabl
 " }}}2
 " Delimited Code Blocks: {{{2
 " this is here because we can override strikeouts and subscripts
-syn region pandocDelimitedCodeBlock start=/^\(>\s\)\?\z(\([ ]\{4,}\|\t\)\=\~\{3,}\~*\)/ end=/^\z1\~*/ skipnl contains=pandocDelimitedCodeBlockStart,pandocDelimitedCodeBlockEnd keepend
-syn region pandocDelimitedCodeBlock start=/^\(>\s\)\?\z(\([ ]\{4,}\|\t\)\=`\{3,}`*\)/ end=/^\z1`*/ skipnl contains=pandocDelimitedCodeBlockStart,pandocDelimitedCodeBlockEnd keepend
+"syn region pandocDelimitedCodeBlock start=/^\(>\s\)\?\z(\([ ]\{4,}\|\t\)\=\~\{3,}\~*\)/ end=/^\z1\~*/ skipnl contains=pandocDelimitedCodeBlockStart,pandocDelimitedCodeBlockEnd keepend
+"syn region pandocDelimitedCodeBlock start=/^\(>\s\)\?\z(\([ ]\{4,}\|\t\)\=`\{3,}`*\)/ end=/^\z1`*/ skipnl contains=pandocDelimitedCodeBlockStart,pandocDelimitedCodeBlockEnd keepend
+syn region pandocDelimitedCodeBlock start=/^```{.*}$/ end=/^```$/ skipnl contains=pandocDelimitedCodeBlockStart,pandocDelimitedCodeBlockEnd keepend
 call s:WithConceal("codeblock_start", 'syn match pandocDelimitedCodeBlockStart /\(\_^\n\_^\(>\s\)\?\([ ]\{4,}\|\t\)\=\)\@<=\(\~\{3,}\~*\|`\{3,}`*\)/ contained containedin=pandocDelimitedCodeBlock nextgroup=pandocDelimitedCodeBlockLanguage', 'conceal cchar='.s:cchars["codelang"])
 syn match pandocDelimitedCodeBlockLanguage /\(\s\?\)\@<=.\+\(\_$\)\@=/ contained 
 call s:WithConceal("codeblock_delim", 'syn match pandocDelimitedCodeBlockEnd /\(`\{3,}`*\|\~\{3,}\~*\)\(\_$\n\(>\s\)\?\_$\)\@=/ contained containedin=pandocDelimitedCodeBlock', 'conceal cchar='.s:cchars["codeend"])
